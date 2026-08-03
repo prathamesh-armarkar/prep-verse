@@ -1,0 +1,125 @@
+/* ==========================
+   HOW IT WORKS
+========================== */
+
+.how-section{
+
+    padding:120px 0;
+
+    background:#F8FAFC;
+
+}
+
+.timeline{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:30px;
+
+    margin-top:60px;
+
+}
+
+.timeline-card{
+
+    background:#fff;
+
+    border-radius:22px;
+
+    padding:35px;
+
+    position:relative;
+
+    transition:.35s;
+
+    border:1px solid #E2E8F0;
+
+    box-shadow:0 10px 25px rgba(15,23,42,.05);
+
+}
+
+.timeline-card:hover{
+
+    transform:translateY(-10px);
+
+    box-shadow:0 20px 40px rgba(37,99,235,.12);
+
+}
+
+.step-number{
+
+    position:absolute;
+
+    top:20px;
+
+    right:20px;
+
+    font-size:2.5rem;
+
+    font-weight:800;
+
+    color:#E2E8F0;
+
+}
+
+.step-icon{
+
+    width:70px;
+
+    height:70px;
+
+    border-radius:18px;
+
+    background:#EFF6FF;
+
+    color:#2563EB;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:1.8rem;
+
+    margin-bottom:25px;
+
+}
+
+.timeline-card h4{
+
+    font-weight:700;
+
+    margin-bottom:15px;
+
+}
+
+.timeline-card p{
+
+    color:#64748B;
+
+    line-height:1.8;
+
+}
+
+@media(max-width:992px){
+
+    .timeline{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+}
+
+@media(max-width:576px){
+
+    .timeline{
+
+        grid-template-columns:1fr;
+
+    }
+
+}

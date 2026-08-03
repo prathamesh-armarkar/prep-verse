@@ -1,0 +1,68 @@
+.dashboard-panel {
+    background: white;
+    border-radius: 22px;
+    padding: 20px;
+    box-shadow: 0 14px 35px rgba(15, 23, 42, 0.06);
+}
+
+.panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+}
+
+.panel-header h3 {
+    font-size: 1rem;
+    margin: 0;
+    color: #0f172a;
+}
+
+.panel-header span {
+    font-size: 0.85rem;
+    color: #64748b;
+}
+
+.activity-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.activity-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.activity-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #2563eb, #4f46e5);
+    margin-top: 7px;
+    flex-shrink: 0;
+}
+
+.activity-content {
+    flex: 1;
+}
+
+.activity-title-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.activity-title-row span {
+    color: #64748b;
+    font-size: 0.82rem;
+}
+
+.activity-content p {
+    margin: 0;
+    color: #64748b;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}

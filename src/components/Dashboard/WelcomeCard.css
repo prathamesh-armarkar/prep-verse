@@ -1,0 +1,51 @@
+.welcome-card {
+    background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
+    border-radius: 24px;
+    padding: 24px;
+    color: white;
+    box-shadow: 0 20px 45px rgba(37, 99, 235, 0.22);
+}
+
+.welcome-card-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+.welcome-eyebrow {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    opacity: 0.85;
+    margin-bottom: 8px;
+}
+
+.welcome-card h2 {
+    font-size: 1.6rem;
+    margin-bottom: 8px;
+}
+
+.welcome-card p {
+    margin: 0;
+    line-height: 1.6;
+    opacity: 0.95;
+}
+
+.welcome-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.16);
+    padding: 10px 12px;
+    border-radius: 999px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+    .welcome-card-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

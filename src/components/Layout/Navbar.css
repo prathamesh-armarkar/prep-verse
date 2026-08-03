@@ -1,0 +1,299 @@
+/* ===========================
+   PREPVERSE AI NAVBAR
+=========================== */
+
+.custom-navbar{
+    position:fixed;
+    top:18px;
+    left:0;
+    width:100%;
+    z-index:9999;
+    transition:all .35s ease;
+}
+
+.navbar-wrapper{
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    background:rgba(255,255,255,.95);
+
+    border:1px solid rgba(255,255,255,.4);
+
+    border-radius:18px;
+
+    padding:14px 30px;
+
+    transition:.35s;
+
+}
+
+/* Blur on Scroll */
+
+.custom-navbar.scrolled .navbar-wrapper{
+
+    background:rgba(255,255,255,.72);
+
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+
+    box-shadow:
+        0 15px 40px rgba(15,23,42,.08),
+        0 5px 15px rgba(0,0,0,.04);
+
+}
+
+/* ===========================
+   LOGO
+=========================== */
+
+.logo-box{
+
+    display:flex;
+    align-items:center;
+
+    text-decoration:none;
+
+}
+
+.logo{
+
+    height:48px;
+    width:auto;
+
+    transition:.35s ease;
+
+}
+
+.logo:hover{
+
+    transform:scale(1.05);
+
+}
+
+/* ===========================
+   NAVIGATION
+=========================== */
+
+.menu{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:30px;
+
+    margin:0;
+
+    padding:0;
+
+    list-style:none;
+
+}
+
+.menu li{
+
+    margin:0;
+
+}
+
+.menu button{
+
+    background:none;
+
+    border:none;
+
+    cursor:pointer;
+
+    color:#475569;
+
+    font-size:16px;
+
+    font-weight:500;
+
+    transition:.3s;
+
+    position:relative;
+
+}
+
+/* Hover */
+
+.menu button:hover{
+
+    color:#2563EB;
+
+}
+
+/* Active */
+
+.menu button.active{
+
+    color:#2563EB;
+
+    font-weight:600;
+
+}
+
+/* Underline */
+
+.menu button::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    bottom:-8px;
+
+    width:0;
+
+    height:2px;
+
+    background:#2563EB;
+
+    border-radius:10px;
+
+    transition:.3s;
+
+}
+
+.menu button:hover::after,
+
+.menu button.active::after{
+
+    width:100%;
+
+}
+
+/* ===========================
+   BUTTONS
+=========================== */
+
+.nav-actions{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+.login-btn{
+
+    text-decoration:none;
+
+    color:#2563EB;
+
+    font-weight:600;
+
+    padding:10px 18px;
+
+    border-radius:12px;
+
+    transition:.3s;
+
+}
+
+.login-btn:hover{
+
+    background:#EFF6FF;
+
+}
+
+.register-btn{
+
+    text-decoration:none;
+
+    color:white;
+
+    font-weight:600;
+
+    padding:11px 24px;
+
+    border-radius:12px;
+
+    background:linear-gradient(
+        135deg,
+        #2563EB,
+        #4F46E5
+    );
+
+    transition:.35s;
+
+    box-shadow:
+        0 10px 25px rgba(37,99,235,.25);
+
+}
+
+.register-btn:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 15px 35px rgba(37,99,235,.35);
+
+}
+
+/* ===========================
+   MOBILE
+=========================== */
+
+@media(max-width:992px){
+
+    .navbar-wrapper{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:20px;
+
+        padding:20px;
+
+    }
+
+    .menu{
+
+        width:100%;
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:15px;
+
+    }
+
+    .nav-actions{
+
+        width:100%;
+
+        flex-direction:column;
+
+    }
+
+    .login-btn,
+
+    .register-btn{
+
+        width:100%;
+
+        text-align:center;
+
+    }
+
+}
+
+/* ===========================
+   EXTRA SMOOTHNESS
+=========================== */
+
+html{
+
+    scroll-behavior:smooth;
+
+}

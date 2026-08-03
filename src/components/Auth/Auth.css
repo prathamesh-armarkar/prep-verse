@@ -1,0 +1,247 @@
+/* ==========================================
+   AUTH OVERLAY
+========================================== */
+
+.auth-overlay{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(15,23,42,.60);
+
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:20px;
+
+    z-index:99999;
+
+    animation:fadeIn .35s ease;
+
+}
+
+/* ==========================================
+   AUTH MODAL
+========================================== */
+
+.auth-modal{
+
+    width:460px;
+
+    max-width:100%;
+
+    max-height:min(90vh, 760px);
+
+    overflow-y:auto;
+    scrollbar-width:thin;
+    scrollbar-color:rgba(148, 163, 184, 0.45) transparent;
+
+    background:#FFFFFF;
+
+    border-radius:22px;
+
+    padding:32px 32px 28px;
+
+    position:relative;
+
+    border:1px solid #E2E8F0;
+
+    box-shadow:
+        0 30px 70px rgba(15,23,42,.15);
+
+    animation:popup .35s ease;
+
+}
+
+/* ==========================================
+   CLOSE BUTTON
+========================================== */
+
+.close-btn{
+
+    position:absolute;
+
+    top:18px;
+
+    right:18px;
+
+    width:42px;
+
+    height:42px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#F8FAFC;
+
+    color:#64748B;
+
+    cursor:pointer;
+
+    font-size:18px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    transition:.3s;
+
+}
+
+.close-btn:hover{
+
+    background:#2563EB;
+
+    color:#FFFFFF;
+
+    transform:rotate(90deg);
+
+}
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.auth-logo{
+
+    text-align:center;
+
+    margin-bottom:28px;
+
+}
+
+.auth-logo-image{
+
+    width:180px;
+
+    max-width:100%;
+
+    height:auto;
+
+    display:block;
+
+    margin:0 auto 10px;
+
+}
+
+.auth-logo h2{
+
+    font-size:2rem;
+
+    font-weight:700;
+
+    color:#0F172A;
+
+    margin-bottom:10px;
+
+}
+
+.auth-logo p{
+
+    color:#64748B;
+
+    font-size:.92rem;
+
+    margin:0;
+
+    line-height:1.5;
+
+}
+
+.auth-modal::-webkit-scrollbar{
+
+    width:6px;
+
+}
+
+.auth-modal::-webkit-scrollbar-track{
+
+    background:transparent;
+
+}
+
+.auth-modal::-webkit-scrollbar-thumb{
+
+    background:rgba(148, 163, 184, 0.45);
+
+    border-radius:999px;
+
+}
+
+.auth-modal::-webkit-scrollbar-thumb:hover{
+
+    background:rgba(100, 116, 139, 0.7);
+
+}
+
+/* ==========================================
+   ANIMATIONS
+========================================== */
+
+@keyframes popup{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(20px) scale(.95);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0) scale(1);
+
+    }
+
+}
+
+@keyframes fadeIn{
+
+    from{
+
+        opacity:0;
+
+    }
+
+    to{
+
+        opacity:1;
+
+    }
+
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media(max-width:576px){
+
+    .auth-modal{
+
+        padding:30px 22px;
+
+        border-radius:20px;
+
+    }
+
+    .auth-logo h2{
+
+        font-size:1.7rem;
+
+    }
+
+}

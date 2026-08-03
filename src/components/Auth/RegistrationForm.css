@@ -1,0 +1,248 @@
+.register-form{
+
+    width:100%;
+
+}
+
+.form-header{
+
+    text-align:center;
+
+    margin-bottom:24px;
+
+}
+
+.form-header h3{
+
+    font-size:2rem;
+
+    font-weight:700;
+
+    color:#0F172A;
+
+    margin-bottom:8px;
+
+}
+
+.form-header p{
+
+    color:#64748B;
+
+}
+
+.input-box{
+
+    display:flex;
+
+    align-items:center;
+
+    background:#F8FAFC;
+
+    border:1px solid #E2E8F0;
+
+    border-radius:14px;
+
+    padding:0 16px;
+
+    margin-bottom:14px;
+
+    transition:.3s;
+
+}
+
+.input-box:focus-within{
+
+    border-color:#2563EB;
+
+    box-shadow:0 0 0 3px rgba(37,99,235,.15);
+
+}
+
+.input-icon{
+
+    color:#64748B;
+
+    font-size:17px;
+
+}
+
+.input-box input{
+
+    flex:1;
+
+    border:none;
+
+    background:none;
+
+    outline:none;
+
+    padding:15px;
+
+    font-size:15px;
+
+}
+
+.eye-btn{
+
+    border:none;
+
+    background:none;
+
+    cursor:pointer;
+
+    color:#64748B;
+
+}
+
+.eye-btn:hover{
+
+    color:#2563EB;
+
+}
+
+/* Terms */
+
+.terms-box{
+
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:10px;
+
+    margin:16px 0 18px;
+
+}
+
+.terms-box input{
+
+    margin-top:4px;
+
+}
+
+.terms-box label{
+
+    color:#64748B;
+
+    font-size:14px;
+
+    line-height:1.6;
+
+}
+
+.terms-box span{
+
+    color:#2563EB;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+}
+
+/* Register Button */
+
+.register-button{
+
+    width:100%;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:linear-gradient(
+        135deg,
+        #2563EB,
+        #4F46E5
+    );
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.register-button:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:0 12px 25px rgba(37,99,235,.25);
+
+}
+
+/* Divider */
+
+.divider{
+
+    display:flex;
+
+    align-items:center;
+
+    margin:24px 0;
+
+}
+
+.divider::before,
+.divider::after{
+
+    content:"";
+
+    flex:1;
+
+    height:1px;
+
+    background:#CBD5E1;
+
+}
+
+.divider span{
+
+    margin:0 15px;
+
+    color:#64748B;
+
+}
+
+/* Bottom */
+
+.bottom-text{
+
+    text-align:center;
+
+    color:#64748B;
+
+}
+
+.bottom-text button{
+
+    border:none;
+
+    background:none;
+
+    color:#2563EB;
+
+    font-weight:600;
+
+    margin-left:5px;
+
+    cursor:pointer;
+
+}
+
+.form-error{
+
+    color:#DC2626;
+
+    font-size:.9rem;
+
+    margin:-4px 0 10px;
+
+    text-align:center;
+
+}

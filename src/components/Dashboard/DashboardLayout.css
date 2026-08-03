@@ -1,0 +1,16 @@
+.dashboard-layout {
+    min-height: 100vh;
+    background: linear-gradient(180deg, #f8fbff 0%, #f5f8ff 100%);
+}
+
+.dashboard-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+@media (max-width: 900px) {
+    .dashboard-content {
+        padding: 16px;
+    }
+}
