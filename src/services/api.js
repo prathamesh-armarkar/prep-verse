@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const api = axios.create({
-    // baseURL: import.meta.env.VITE_API_BASE_URL || "https://prep-verse-b.onrender.com",
-    baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:5000",
+    baseURL: import.meta.env.VITE_API_BASE_URL || "https://prep-verse-b.onrender.com",
+    // baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:5000",
     withCredentials: false,
     headers: {
         "Content-Type": "application/json"
