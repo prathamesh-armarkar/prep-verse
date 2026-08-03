@@ -84,21 +84,7 @@ function Footer() {
 
                     <div className="col-lg-3">
 
-                        <h5>Connect</h5>
-
-                        <div className="social-links">
-
-                            <a href="https://github.com/prathamesharmarkar9-netizen">
-                                <FaGithub />
-                            </a>
-
-                            <a href="https://www.linkedin.com/in/prathamesh-armarkar?utm_source=share_via&utm_content=profile&utm_medium=member_android">
-                                <FaLinkedin />
-                            </a>
-
-                            <a href="prathamesh.armarkar9@gmail.com">
-                                <FaEnvelope />
-                            </a>
+                        
 
                         </div>
 
