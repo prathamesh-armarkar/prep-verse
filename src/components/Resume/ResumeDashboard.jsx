@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Bar, Doughnut, Line } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, BarElement, CategoryScale, Filler, Legend, LineElement, LinearScale, PointElement, Tooltip } from "chart.js";
 import { FaArrowDown, FaArrowUp, FaCheck, FaCloudUploadAlt, FaDownload, FaExpand, FaFileAlt, FaSearchPlus, FaTrashAlt } from "react-icons/fa";
@@ -92,7 +93,71 @@ export function ResumeStrength({ analysis }) {
     return <section className="resume-card"><p className="card-kicker">Resume strength</p><h3>Your most persuasive signals</h3><div className="strength-list">{strengths.map((item) => <div key={item.name}><div><strong>{item.name}</strong><b>{item.score}%</b></div><div className="mini-progress"><span style={{ width: `${item.score}%` }} /></div><p>{item.recommendation}</p></div>)}</div></section>;
 }
 
-export function AISuggestions({ analysis }) { const suggestions = list(analysis, "suggestions"); return <section className="resume-card"><p className="card-kicker">AI suggestions</p><h3>Highest-impact improvements</h3><div className="suggestion-list">{suggestions.map((item, index) => <article key={item.id || index}><span className={`priority ${item.priority?.toLowerCase() || "medium"}`}>{item.priority || "Medium"} priority</span><h4>{item.title || item.reason}</h4><p>{item.example || item.description}</p><footer><strong>+{item.estimated_ats_increase || 0} ATS points</strong><button type="button">Apply suggestion <FaArrowUp /></button></footer></article>)}</div></section>; }
+export function AISuggestions({ analysis }) {
+    const { resume } = useResume();
+    const navigate = useNavigate();
+    const suggestions = list(analysis, "suggestions");
+
+    const hiddenResumeContext = {
+        target_role: resume?.target_role,
+        ats_score: analysis?.ats_score,
+        resume_completeness: analysis?.resume_completeness?.overall_completion,
+        contact: {
+            linkedin: Boolean(analysis?.contact_analysis?.linkedin),
+            github: Boolean(analysis?.contact_analysis?.github),
+            portfolio: Boolean(analysis?.contact_analysis?.portfolio),
+        },
+        project_count: analysis?.project_analysis?.project_count ?? 0,
+        experience_count: analysis?.experience_analysis?.experience_count ?? 0,
+        certification_count: analysis?.certification_analysis?.certification_count ?? 0,
+        sections: list(analysis, "sections").map((item) => ({
+            name: item.name,
+            score: item.score,
+            recommendation: item.recommendation || item.weakness,
+        })),
+        skill_summary: {
+            technical_skills: analysis?.skills_analysis?.technical_skills ?? 0,
+            matched_skills: Array.isArray(analysis?.skills_analysis?.matched_skills) ? analysis.skills_analysis.matched_skills : [],
+            missing_skills: Array.isArray(analysis?.skills_analysis?.missing_skills) ? analysis.skills_analysis.missing_skills : [],
+            recommended_skills: Array.isArray(analysis?.skills_analysis?.recommended_skills) ? analysis.skills_analysis.recommended_skills : [],
+        },
+    };
+
+    const handleApplySuggestion = (item) => {
+        const title = item.title || item.reason || "Resume improvement suggestion";
+        const details = item.description || item.example || "";
+        const message = `I'm reviewing a resume suggestion: "${title}". ${details ? `Details: ${details}` : ""} Please explain exactly what I should change on my resume, why this suggestion matters, and how it will improve my ATS and interview readiness.`;
+
+        navigate("/assistant", {
+            state: {
+                initialMessage: message,
+                resumeContext: hiddenResumeContext,
+            },
+        });
+    };
+
+    return (
+        <section className="resume-card">
+            <p className="card-kicker">AI suggestions</p>
+            <h3>Highest-impact improvements</h3>
+            <div className="suggestion-list">
+                {suggestions.map((item, index) => (
+                    <article key={item.id || index}>
+                        <span className={`priority ${item.priority?.toLowerCase() || "medium"}`}>{item.priority || "Medium"} priority</span>
+                        <h4>{item.title || item.reason}</h4>
+                        <p>{item.example || item.description}</p>
+                        <footer>
+                            <strong>+{item.estimated_ats_increase || 0} ATS points</strong>
+                            <button type="button" onClick={() => handleApplySuggestion(item)}>
+                                Apply suggestion <FaArrowUp />
+                            </button>
+                        </footer>
+                    </article>
+                ))}
+            </div>
+        </section>
+    );
+}
 
 export function ResumeHistory({ history, onCompare }) { return <section className="resume-card"><div className="card-title-row"><div><p className="card-kicker">Version history</p><h3>Track your improvement</h3></div></div><div className="history-list">{history.map((item, index) => <article className="history-item" key={item.id || index}><div className="history-dot" /><div><strong>{item.version_name || `Version ${history.length - index}`}</strong>{index === 0 && <span className="latest-badge">Latest</span>}<p>{date(item.uploaded_at)} · ATS {item.ats_score ?? "—"}</p><small>{item.changes || item.file_name}</small></div>{index > 0 && <button type="button" className="text-btn" onClick={() => onCompare(item.id)}>Compare</button>}</article>)}</div></section>; }
 

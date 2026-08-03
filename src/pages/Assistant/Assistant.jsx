@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 import DashboardLayout from "../../components/Dashboard/DashboardLayout";
 import { PageHeader } from "../../components/Common/ReusableComponents";
 import { FaPaperPlane, FaPlus, FaRegCopy, FaRedo, FaRobot, FaTrash, FaVolumeUp } from "react-icons/fa";
@@ -16,6 +17,7 @@ const PROMPT_SUGGESTIONS = [
 ];
 
 function Assistant() {
+    const location = useLocation();
     const { user, token } = useAuth();
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState("");
@@ -23,6 +25,7 @@ function Assistant() {
     const [sending, setSending] = useState(false);
     const [error, setError] = useState("");
     const [historyList, setHistoryList] = useState([]);
+    const [lastPayloadKey, setLastPayloadKey] = useState(null);
     const chatEndRef = useRef(null);
     const inputRef = useRef(null);
 
@@ -49,7 +52,7 @@ function Assistant() {
         chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages]);
 
-    const sendMessage = useCallback(async (text) => {
+    const sendMessage = useCallback(async (text, options = {}) => {
         if (!text.trim() || sending || !token) return;
         setSending(true);
         setError("");
@@ -59,7 +62,9 @@ function Assistant() {
         setMessages((prev) => [...prev, userMsg]);
 
         try {
-            const result = await assistantService.send(text, token);
+            const result = await assistantService.send(text, token, {
+                resumeContext: options.resumeContext,
+            });
             const assistantMsg = {
                 role: "assistant",
                 message: result.message,
@@ -84,6 +89,18 @@ function Assistant() {
         sendMessage(input);
         setInput("");
     };
+
+    useEffect(() => {
+        const initialMessage = location.state?.initialMessage;
+        const resumeContext = location.state?.resumeContext;
+        const payloadKey = initialMessage && resumeContext ? `${initialMessage}-${JSON.stringify(resumeContext)}` : null;
+
+        if (initialMessage && payloadKey && payloadKey !== lastPayloadKey) {
+            handleNewChat();
+            sendMessage(initialMessage, { resumeContext });
+            setLastPayloadKey(payloadKey);
+        }
+    }, [location.state, lastPayloadKey, sendMessage]);
 
     const handleKeyDown = (e) => {
         if (e.key === "Enter" && !e.shiftKey) {

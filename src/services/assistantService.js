@@ -9,12 +9,19 @@ export const assistantService = {
      * Send a message to the AI career assistant.
      * @param {string} message - The user's message
      * @param {string} token - JWT auth token
+     * @param {object} [options] - Additional request options
+     * @param {object} [options.resumeContext] - Hidden resume context for this query
      * @returns {Promise<{message: string, actions: string[]}>}
      */
-    send: async (message, token) => {
+    send: async (message, token, options = {}) => {
+        const payload = { message };
+        if (options.resumeContext) {
+            payload.resume_context = options.resumeContext;
+        }
+
         const response = await api.post(
             "/api/chat/send",
-            { message },
+            payload,
             headers(token),
         );
         return response.data?.data ?? response.data;
