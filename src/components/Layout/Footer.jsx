@@ -102,11 +102,7 @@ function Footer() {
 
                     </p>
 
-                    <p>
-
-                        Built with <FaHeart className="heart" /> using React • Flask • MySQL • Gemini AI
-
-                    </p>
+                    
 
                 </div>
 
