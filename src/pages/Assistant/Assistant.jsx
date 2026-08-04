@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useLocation } from "react-router-dom";
 import DashboardLayout from "../../components/Dashboard/DashboardLayout";
 import { PageHeader } from "../../components/Common/ReusableComponents";
 import { FaPaperPlane, FaPlus, FaRegCopy, FaRedo, FaRobot, FaTrash, FaVolumeUp } from "react-icons/fa";
@@ -19,15 +18,20 @@ const PROMPT_SUGGESTIONS = [
 function Assistant() {
     const location = useLocation();
     const { user, token } = useAuth();
+    const location = useLocation();
+    const navigate = useNavigate();
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState("");
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [sending, setSending] = useState(false);
     const [error, setError] = useState("");
     const [historyList, setHistoryList] = useState([]);
     const [lastPayloadKey, setLastPayloadKey] = useState(null);
     const chatEndRef = useRef(null);
     const inputRef = useRef(null);
+    // Holds an applied resume suggestion that should be auto-sent once history
+    // has finished loading. Kept in refs so a refresh doesn't re-send it.
+    const pendingSuggestionRef = useRef(null);
 
     // Load chat history on mount
     const loadHistory = useCallback(async () => {
@@ -47,12 +51,41 @@ function Assistant() {
 
     useEffect(() => { loadHistory(); }, [loadHistory]);
 
+    // Capture an applied resume suggestion from router state exactly once.
+    // We deliberately do NOT navigate (and therefore do not mutate location)
+    // inside this effect, so nothing can cancel the pending send. The router
+    // state is replaced afterwards to prevent a refresh from re-sending it.
+    useEffect(() => {
+        const state = location.state;
+        if (!state?.message || pendingSuggestionRef.current) return;
+        const text = String(state.message);
+        const hint = state.systemHint ? String(state.systemHint) : "";
+        pendingSuggestionRef.current = { text, hint };
+        // Replace router state so a refresh doesn't re-send the suggestion.
+        navigate(location.pathname, { replace: true });
+    }, [location.state, navigate]);
+
+    // Auto-send the applied suggestion once history has loaded (loading becomes
+    // false). This guarantees the optimistic user message is appended after the
+    // loaded history, so it can't be overwritten by a late history fetch.
+    useEffect(() => {
+        if (loading || sending || !token) return;
+        const pending = pendingSuggestionRef.current;
+        if (!pending) return;
+        pendingSuggestionRef.current = null;
+        const { text, hint } = pending;
+        if (text.trim()) {
+            setInput(text);
+            sendMessage(text, hint);
+        }
+    }, [loading, sending, token, sendMessage]);
+
     // Scroll to bottom when new messages arrive
     useEffect(() => {
         chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages]);
 
-    const sendMessage = useCallback(async (text, options = {}) => {
+    const sendMessage = useCallback(async (text) => {
         if (!text.trim() || sending || !token) return;
         setSending(true);
         setError("");
@@ -62,9 +95,7 @@ function Assistant() {
         setMessages((prev) => [...prev, userMsg]);
 
         try {
-            const result = await assistantService.send(text, token, {
-                resumeContext: options.resumeContext,
-            });
+            const result = await assistantService.send(text, token);
             const assistantMsg = {
                 role: "assistant",
                 message: result.message,

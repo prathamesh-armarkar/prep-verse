@@ -239,40 +239,272 @@
 }
 
 /* ===========================
-   MOBILE
+   MOBILE TOGGLE (hidden on desktop)
 =========================== */
 
-@media(max-width:992px){
+.nav-toggle{
+
+    display:none;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:5px;
+
+    width:44px;
+
+    height:44px;
+
+    padding:0;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#EFF6FF;
+
+    cursor:pointer;
+
+    transition:.3s ease;
+
+    z-index:1001;
+
+}
+
+.nav-toggle span{
+
+    display:block;
+
+    width:22px;
+
+    height:2px;
+
+    border-radius:99px;
+
+    background:#2563EB;
+
+    transition:transform .3s ease, opacity .3s ease, background .3s ease;
+
+}
+
+.nav-toggle:hover{
+
+    background:#DBEAFE;
+
+}
+
+/* Hamburger -> X animation */
+
+.nav-toggle.open span:nth-child(1){
+
+    transform:translateY(7px) rotate(45deg);
+
+}
+
+.nav-toggle.open span:nth-child(2){
+
+    opacity:0;
+
+}
+
+.nav-toggle.open span:nth-child(3){
+
+    transform:translateY(-7px) rotate(-45deg);
+
+}
+
+/* ===========================
+   TABLET (compact, keeps inline layout)
+=========================== */
+
+@media(min-width:769px) and (max-width:1199px){
 
     .navbar-wrapper{
 
-        flex-direction:column;
+        padding:12px 22px;
 
-        align-items:flex-start;
+    }
 
-        gap:20px;
+    .logo{
 
-        padding:20px;
+        height:42px;
 
     }
 
     .menu{
 
-        width:100%;
+        gap:clamp(14px, 2.5vw, 22px);
 
-        flex-direction:column;
+    }
 
-        align-items:flex-start;
+    .menu button{
 
-        gap:15px;
+        font-size:15px;
 
     }
 
     .nav-actions{
 
+        gap:10px;
+
+    }
+
+    .login-btn{
+
+        padding:9px 15px;
+
+    }
+
+    .register-btn{
+
+        padding:10px 19px;
+
+    }
+
+}
+
+/* ===========================
+   MOBILE (hamburger menu)
+=========================== */
+
+@media(max-width:768px){
+
+    .navbar-wrapper{
+
+        position:relative;
+
+        flex-wrap:wrap;
+
+        padding:14px 18px;
+
+    }
+
+    .nav-toggle{
+
+        display:flex;
+
+        margin-left:auto;
+
+    }
+
+    .menu{
+
+        display:none;
+
+        order:3;
+
         width:100%;
 
         flex-direction:column;
+
+        align-items:stretch;
+
+        gap:6px;
+
+        padding:14px 0 0;
+
+        margin-top:14px;
+
+        border-top:1px solid #E2E8F0;
+
+        opacity:0;
+
+        transform:translateY(-8px);
+
+        transition:opacity .3s ease, transform .3s ease;
+
+    }
+
+    .menu.open{
+
+        display:flex;
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+    .menu li{
+
+        width:100%;
+
+    }
+
+    .menu button{
+
+        width:100%;
+
+        text-align:left;
+
+        padding:12px 14px;
+
+        border-radius:12px;
+
+        font-size:16px;
+
+        color:#334155;
+
+        transition:.25s ease;
+
+    }
+
+    .menu button:hover{
+
+        background:#EFF6FF;
+
+        color:#2563EB;
+
+    }
+
+    .menu button.active{
+
+        background:#EFF6FF;
+
+        color:#2563EB;
+
+    }
+
+    /* Hide the underline indicator on mobile (use pill instead) */
+
+    .menu button::after{
+
+        display:none;
+
+    }
+
+    .nav-actions{
+
+        order:4;
+
+        display:none;
+
+        width:100%;
+
+        flex-direction:column;
+
+        gap:10px;
+
+        padding-top:14px;
+
+        opacity:0;
+
+        transform:translateY(-8px);
+
+        transition:opacity .3s ease, transform .3s ease;
+
+    }
+
+    .nav-actions.open{
+
+        display:flex;
+
+        opacity:1;
+
+        transform:translateY(0);
 
     }
 
@@ -283,6 +515,8 @@
         width:100%;
 
         text-align:center;
+
+        padding:12px 18px;
 
     }
 

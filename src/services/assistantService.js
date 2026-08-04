@@ -13,12 +13,7 @@ export const assistantService = {
      * @param {object} [options.resumeContext] - Hidden resume context for this query
      * @returns {Promise<{message: string, actions: string[]}>}
      */
-    send: async (message, token, options = {}) => {
-        const payload = { message };
-        if (options.resumeContext) {
-            payload.resume_context = options.resumeContext;
-        }
-
+    send: async (message, token) => {
         const response = await api.post(
             "/api/chat/send",
             payload,

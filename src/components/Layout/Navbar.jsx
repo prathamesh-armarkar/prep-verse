@@ -8,6 +8,7 @@ function Navbar({ openAuth }) {
 
     const [scrolled, setScrolled] = useState(false);
     const [active, setActive] = useState("home");
+    const [menuOpen, setMenuOpen] = useState(false);
 
     useEffect(() => {
 
@@ -43,16 +44,26 @@ function Navbar({ openAuth }) {
 
         };
 
-        window.addEventListener("scroll", handleScroll);
+        const handleResize = () => {
+            if (window.innerWidth > 768) setMenuOpen(false);
+        };
 
-        return () =>
+        window.addEventListener("scroll", handleScroll);
+        window.addEventListener("resize", handleResize);
+
+        return () => {
             window.removeEventListener("scroll", handleScroll);
+            window.removeEventListener("resize", handleResize);
+        };
 
     }, []);
 
     const scrollToSection = (id) => {
 
         const section = document.getElementById(id);
+
+        // Close the mobile menu before navigating
+        setMenuOpen(false);
 
         if (!section) return;
 
@@ -72,6 +83,11 @@ function Navbar({ openAuth }) {
 
     };
 
+    const handleAuth = (mode) => {
+        setMenuOpen(false);
+        openAuth(mode);
+    };
+
     return (
 
         <nav className={`custom-navbar ${scrolled ? "scrolled" : ""}`}>
@@ -83,6 +99,7 @@ function Navbar({ openAuth }) {
                 <Link
                     to="/"
                     className="logo-box"
+                    onClick={() => setMenuOpen(false)}
                 >
 
                     <img
@@ -93,9 +110,23 @@ function Navbar({ openAuth }) {
 
                 </Link>
 
+                {/* Mobile Toggle */}
+
+                <button
+                    type="button"
+                    className={`nav-toggle ${menuOpen ? "open" : ""}`}
+                    onClick={() => setMenuOpen((previous) => !previous)}
+                    aria-expanded={menuOpen}
+                    aria-label="Toggle navigation menu"
+                >
+                    <span />
+                    <span />
+                    <span />
+                </button>
+
                 {/* Navigation */}
 
-                <ul className="menu">
+                <ul className={`menu ${menuOpen ? "open" : ""}`}>
 
                     <li>
                         <button
@@ -128,20 +159,20 @@ function Navbar({ openAuth }) {
 
                 </ul>
 
-                {/* Authentication Buttons */}
+{/* Authentication Buttons */}
 
-                <div className="nav-actions">
+                <div className={`nav-actions ${menuOpen ? "open" : ""}`}>
 
                     <button
                         className="login-btn"
-                        onClick={() => openAuth("login")}
+                        onClick={() => handleAuth("login")}
                     >
                         Login
                     </button>
 
                     <button
                         className="register-btn"
-                        onClick={() => openAuth("register")}
+                        onClick={() => handleAuth("register")}
                     >
                         Register
                     </button>

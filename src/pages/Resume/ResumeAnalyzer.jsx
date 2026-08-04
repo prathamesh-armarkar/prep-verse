@@ -48,26 +48,34 @@ function ResumeAnalyzer() {
         <div id="resume-upload"><ResumeUpload /></div>
         {loading ? <LoadingDashboard /> : !resume ? <EmptyState /> : <>
             {error && <div className="resume-alert page-alert"><span>{error}</span><button type="button" onClick={load}>Retry</button></div>}
-            {aiWarning && <div className="resume-alert page-alert" style={{ background: "#fffbeb", borderColor: "#fde68a", color: "#92400e" }}><span>⚠ {aiWarning}</span></div>}
+{aiWarning && <div className="resume-alert page-alert" style={{ background: "#fffbeb", borderColor: "#fde68a", color: "#92400e" }}><span>⚠ {aiWarning}</span></div>}
             {parsingWarning && <div className="resume-alert page-alert" style={{ background: "#fef2f2", borderColor: "#fecaca", color: "#991b1b" }}><span>{parsingWarning}</span></div>}
             <ResumeOverview resume={resume} analysis={analysis} />
-            <ResumeAnalysisSummary analysis={analysis} />
 
-            {hasAI ? <>
-                <section className="resume-grid overview-layout">
-                    <ATSGauge score={analysis?.ats_score ?? 0} confidence={analysis?.confidence} />
-                    <MetricBreakdown analysis={analysis} />
-                </section>
-                <section className="resume-grid two-column"><SkillAnalysis analysis={analysis} /><KeywordAnalysis analysis={analysis} /></section>
-                <section className="resume-grid two-column"><ResumeSections analysis={analysis} /><ResumeStrength analysis={analysis} /></section>
-                <AISuggestions analysis={analysis} />
-            </> : null}
+            <div className="resume-analysis-layout">
+                <div className="resume-analysis-main">
+                    {hasAI ? <>
+                        <section className="resume-grid overview-layout">
+                            <ATSGauge score={analysis?.ats_score ?? 0} confidence={analysis?.confidence} />
+                            <MetricBreakdown analysis={analysis} />
+                        </section>
+                        <section className="resume-grid two-column"><SkillAnalysis analysis={analysis} /><KeywordAnalysis analysis={analysis} /></section>
+                        <section className="resume-grid two-column"><ResumeSections analysis={analysis} /><ResumeStrength analysis={analysis} /></section>
+                        <AISuggestions analysis={analysis} />
+                    </> : null}
 
-            <section className="resume-grid two-column"><SectionAnalysis analysis={analysis} /><CategorizedSkills parsed={parsed} analysis={analysis} /></section>
-            <ProjectTable analysis={analysis} />
-            <ParsedResumeInformation parsed={parsed} />
-            <RuleBasedSuggestions analysis={analysis} />
-            <section className="resume-grid two-column"><ResumeVersionHistory history={history} /></section>
+                    <ProjectTable analysis={analysis} />
+                    <ParsedResumeInformation parsed={parsed} />
+                    <section className="resume-grid one-column"><ResumeVersionHistory history={history} /></section>
+                </div>
+
+                <aside className="resume-analysis-side">
+                    <ResumeAnalysisSummary analysis={analysis} />
+                    <SectionAnalysis analysis={analysis} />
+                    <CategorizedSkills parsed={parsed} analysis={analysis} />
+                    <RuleBasedSuggestions analysis={analysis} />
+                </aside>
+            </div>
         </>}
     </div></DashboardLayout>;
 }
