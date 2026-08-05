@@ -4,6 +4,7 @@ import { PageHeader } from "../../components/Common/ReusableComponents";
 import { FaPaperPlane, FaPlus, FaRegCopy, FaRedo, FaRobot, FaTrash, FaVolumeUp } from "react-icons/fa";
 import { useAuth } from "../../hooks/useAuth";
 import { assistantService } from "../../services/assistantService";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./Assistant.css";
 
 const PROMPT_SUGGESTIONS = [
@@ -17,9 +18,8 @@ const PROMPT_SUGGESTIONS = [
 
 function Assistant() {
     const location = useLocation();
-    const { user, token } = useAuth();
-    const location = useLocation();
     const navigate = useNavigate();
+    const { user, token } = useAuth();
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState("");
     const [loading, setLoading] = useState(true);
@@ -65,27 +65,7 @@ function Assistant() {
         navigate(location.pathname, { replace: true });
     }, [location.state, navigate]);
 
-    // Auto-send the applied suggestion once history has loaded (loading becomes
-    // false). This guarantees the optimistic user message is appended after the
-    // loaded history, so it can't be overwritten by a late history fetch.
-    useEffect(() => {
-        if (loading || sending || !token) return;
-        const pending = pendingSuggestionRef.current;
-        if (!pending) return;
-        pendingSuggestionRef.current = null;
-        const { text, hint } = pending;
-        if (text.trim()) {
-            setInput(text);
-            sendMessage(text, hint);
-        }
-    }, [loading, sending, token, sendMessage]);
-
-    // Scroll to bottom when new messages arrive
-    useEffect(() => {
-        chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-    }, [messages]);
-
-    const sendMessage = useCallback(async (text) => {
+const sendMessage = useCallback(async (text) => {
         if (!text.trim() || sending || !token) return;
         setSending(true);
         setError("");
@@ -114,6 +94,26 @@ function Assistant() {
             setSending(false);
         }
     }, [sending, token]);
+
+    // Auto-send the applied suggestion once history has loaded (loading becomes
+    // false). This guarantees the optimistic user message is appended after the
+    // loaded history, so it can't be overwritten by a late history fetch.
+    useEffect(() => {
+        if (loading || sending || !token) return;
+        const pending = pendingSuggestionRef.current;
+        if (!pending) return;
+        pendingSuggestionRef.current = null;
+        const { text, hint } = pending;
+        if (text.trim()) {
+            setInput(text);
+            sendMessage(text, hint);
+        }
+    }, [loading, sending, token, sendMessage]);
+
+    // Scroll to bottom when new messages arrive
+    useEffect(() => {
+        chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [messages]);
 
     const handleSend = () => {
         if (!input.trim()) return;

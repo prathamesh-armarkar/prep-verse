@@ -8,7 +8,6 @@ import Dashboard from "../pages/Dashboard/Dashboard";
 import Assistant from "../pages/Assistant/Assistant";
 import ResumeAnalyzer from "../pages/Resume/ResumeAnalyzer";
 import SkillRoadmap from "../pages/Roadmap/SkillRoadmap";
-import CareerInsights from "../pages/CareerInsights/CareerInsights";
 import Profile from "../pages/Profile/Profile";
 import EditProfile from "../pages/Profile/EditProfile";
 
@@ -30,7 +29,6 @@ function AppRoutes() {
             <Route path="/assistant" element={<ProtectedRoute><Assistant /></ProtectedRoute>} />
             <Route path="/resume-analyzer" element={<ProtectedRoute><ResumeAnalyzer /></ProtectedRoute>} />
             <Route path="/skill-roadmap" element={<ProtectedRoute><SkillRoadmap /></ProtectedRoute>} />
-            <Route path="/career-insights" element={<ProtectedRoute><CareerInsights /></ProtectedRoute>} />
             <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
             <Route path="/profile/edit" element={<ProtectedRoute><EditProfile /></ProtectedRoute>} />
 

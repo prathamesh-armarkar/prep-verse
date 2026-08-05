@@ -1,5 +1,5 @@
 import "./Footer.css";
-import { FaHeart } from "react-icons/fa";
+import { FaHeart, FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
 
 import logo from "../../assets/logo/logo.svg";
 

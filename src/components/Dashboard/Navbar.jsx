@@ -9,8 +9,7 @@ const navItems = [
     { to: "/dashboard", label: "Dashboard" },
     { to: "/assistant", label: "AI Career Assistant" },
     { to: "/resume-analyzer", label: "Resume Analyzer" },
-    { to: "/skill-roadmap", label: "Skill Roadmap" },
-    { to: "/career-insights", label: "Career Insights" }
+    { to: "/skill-roadmap", label: "Skill Roadmap" }
 ];
 
 function Navbar() {
